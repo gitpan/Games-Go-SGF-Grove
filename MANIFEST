@@ -4,5 +4,4 @@ Makefile.PL
 README
 Grove.pm
 t/00_load.t
-samples/test
 META.yml                                 Module meta-data (added by MakeMaker)

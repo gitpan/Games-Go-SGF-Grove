@@ -38,7 +38,7 @@ use Carp;
 
 use base Exporter::;
 
-our $VERSION = 0.1;
+our $VERSION = '1.0';
 our @EXPORT = qw(load_sgf save_sgf encode_sgf decode_sgf);
 
 =item $game = load_sgf $path
@@ -483,8 +483,8 @@ A property type is a hash like this:
                            my ($x1, $y1) = map $char2coord{$_}, split //, $ul; 
                            my ($x2, $y2) = map $char2coord{$_}, split //, $dr; 
                            my @stones;
-                           for (my $d = $x1; $d < $x2; $d++) {
-                              for (my $i = $y1; $i < $y2; $i++) {
+                           for (my $d = $x1; $d <= $x2; $d++) {
+                              for (my $i = $y1; $i <= $y2; $i++) {
                                  push @stones, [$d, $i];
                               }
                            }
@@ -499,22 +499,13 @@ A property type is a hash like this:
                      $coord2char{$_[1][0]} . $coord2char{$_[1][1]}
                   },
                );
-         } elsif (s/real//) {
+         } elsif (s/real// || s/number//) {
             return (
                   sub {
-                     $_[1]+0
+                     $_[1]
                   },
                   sub {
-                     $_[1]+0
-                  },
-               );
-         } elsif (s/number//) {
-            return (
-                  sub {
-                     $_[1]+0
-                  },
-                  sub {
-                     int $_[1]
+                     $_[1]
                   },
                );
          } elsif (s/text// || s/simpletext//i) {

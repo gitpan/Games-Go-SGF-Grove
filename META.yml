@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                Games-Go-SGF-Grove
-version:             0.1
+version:             1.0
 abstract:            SGF the Perl way
 license:             ~
 author:              ~
