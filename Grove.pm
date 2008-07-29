@@ -38,7 +38,7 @@ use Carp;
 
 use base Exporter::;
 
-our $VERSION = '1.0';
+our $VERSION = '1.01';
 our @EXPORT = qw(load_sgf save_sgf encode_sgf decode_sgf);
 
 =item $game = load_sgf $path
@@ -236,10 +236,11 @@ sub postprocess {
       if ("ARRAY" eq ref) {
          $self->postprocess (@$_);
       } elsif ("HASH" eq ref) {
-         if (my $value = $_->{_text}) {
+         if (exists $_->{_text}) {
+            my $value = $_->{_text};
             $value =~ s/\\\n/ /g;
             $value =~ s/\\(.)/$1/g;
-            $_ = eval { Encode::decode $self->{CA}, $value } || $value
+            $_ = eval { Encode::decode $self->{CA}, $value } || $value;
          } else {
             $self->postprocess (values %$_);
          }
